@@ -1,0 +1,13 @@
+PODS:
+  - JCNotificationBannerPresenter (1.1.2)
+  - SwiftyUserDefaults (2.0.0)
+
+DEPENDENCIES:
+  - JCNotificationBannerPresenter (= 1.1.2)
+  - SwiftyUserDefaults (= 2.0.0)
+
+SPEC CHECKSUMS:
+  JCNotificationBannerPresenter: f40150961943048ed3b1d2628d29dbf66a959e21
+  SwiftyUserDefaults: 1266e9734c68bcfbac8294ee84173dc8ba6db312
+
+COCOAPODS: 0.39.0.rc.1
