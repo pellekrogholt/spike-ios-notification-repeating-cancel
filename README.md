@@ -27,5 +27,5 @@ notification is re-triggered when firing
 
 ## More
 
-- (stackoverflow post)[http://stackoverflow.com/questions/34186247/why-does-canceling-of-a-local-notification-triggers-a-repeating-local-notificati]
-- (Apple dev forum post)[https://forums.developer.apple.com/message/94169]
+- [stackoverflow post](http://stackoverflow.com/questions/34186247/why-does-canceling-of-a-local-notification-triggers-a-repeating-local-notificati)
+- [Apple dev forum post](https://forums.developer.apple.com/message/94169)
