@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.listNotifications()
 
         let n = UILocalNotification()
-        n.fireDate = NSDate(timeIntervalSinceNow: 15)
+        n.fireDate = NSDate(timeIntervalSinceNow: 8)
         n.soundName = UILocalNotificationDefaultSoundName
         n.timeZone = NSTimeZone.defaultTimeZone()
         n.applicationIconBadgeNumber = 0
@@ -109,12 +109,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let userInfo = notification.userInfo,
            let id = userInfo["id"] as? String
            where id == "dailyreminder" {
-            NSLog("Repeating daily reminder was called ~ lets fire a noti to show the user")
+            NSLog("Repeating daily reminder was called ///////////////////////////")
+            NSLog(" ~ lets fire a noti to show the user")
 
             // Some condition checks that need to be true before firing the local notification
             if true {
                 let n = UILocalNotification()
-                n.fireDate = nil
+                // n.fireDate = NSDate(timeIntervalSinceNow: 5)
                 n.timeZone = NSTimeZone.defaultTimeZone()
                 n.applicationIconBadgeNumber = ++UIApplication.sharedApplication().applicationIconBadgeNumber
                 n.userInfo = [
@@ -123,6 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 n.alertTitle = "One time notification title"
                 n.alertBody = "One time notification body"
 
+                // n.repeatInterval = NSCalendarUnit.init(rawValue: 0)
                 UIApplication.sharedApplication().scheduleLocalNotification(n)
             }
         }
