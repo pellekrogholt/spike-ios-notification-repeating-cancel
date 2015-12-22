@@ -74,40 +74,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch state {
             case UIApplicationState.Active:
                 NSLog(String(format: "%@ > UIApplicationState.Active", id))
-                UIApplication.sharedApplication().cancelLocalNotification(notification)
+                let alertController = UIAlertController(
+                        title: "Default Style",
+                        message: "A standard alert.",
+                        preferredStyle: .Alert)
 
-
-                let alertController = UIAlertController(title: "Default Style", message: "A standard alert.", preferredStyle: .Alert)
-
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-                // ...
+                let cancelAction = UIAlertAction(
+                        title: "Cancel",
+                        style: .Cancel) { _ in
+                NSLog("Do nothing ////////////////////// ")
             }
             alertController.addAction(cancelAction)
-
             let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
                 NSLog("OK was pressed //////////////////////////////////////////////")
                 UIApplication.sharedApplication().cancelLocalNotification(notification)
-                // ...
             }
             alertController.addAction(OKAction)
 
             self.window!.makeKeyAndVisible()
             let v = self.window!.rootViewController!
-                v.presentViewController(alertController, animated: true, completion: {})
-            // self.presentViewController(alertController, animated: true) {
-            //     // ...
-            // }
-
-                // JCNotificationCenter.enqueueNotificationWithTitle(
-                //     notification.alertTitle,
-                //     message: notification.alertBody,
-                //     tapHandler: { () -> Void in
-                //         NSLog("Banner click ///////////////////////////////////////")
-                //         // 1. Go to somewhere in the app
-                //         // 2. Cancel the notification from the `notifications view`
-                //         UIApplication.sharedApplication().cancelLocalNotification(notification)
-                //         // `cancel` results in an additional call up of the "dailyreminder" ~ why?
-                //     })
+            v.presentViewController(alertController,
+                                    animated: true,
+                                    completion: {})
             case UIApplicationState.Inactive:
                 NSLog(String(format: "%@ > UIApplicationState.Inactive", id))
                 // This is called up when user selects the notification within the `notifications view`
