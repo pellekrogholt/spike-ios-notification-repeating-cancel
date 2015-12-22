@@ -107,16 +107,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if let userInfo = notification.userInfo,
+           let fireDate = notification.fireDate,
            let id = userInfo["id"] as? String
            where id == "dailyreminder" {
-            NSLog("Repeating daily reminder was called ///////////////////////////")
-            NSLog(" ~ lets fire a noti to show the user")
+            NSLog("Repeating daily reminder was called ~ lets fire a noti to show the user //////////////")
 
             // Some condition checks that need to be true before firing the local notification
             if true {
+
+                NSLog(fireDate.description)
+
+                // 1. Cancel repeating notification
+
+                UIApplication.sharedApplication().cancelLocalNotification(notification)
+
+                // 2. create new repeating + add one day
+
+                let ng = UILocalNotification()
+                ng.fireDate = fireDate.dateByAddingTimeInterval(60*60*24)
+                ng.timeZone = NSTimeZone.defaultTimeZone()
+                ng.userInfo = ["id": "dailyreminder"]
+                ng.repeatInterval = NSCalendarUnit.Day
+
+                // 3. schedule repeating
+
+                UIApplication.sharedApplication().scheduleLocalNotification(ng)
+
+                // Finally create and schedule the onetime notification
                 let n = UILocalNotification()
-                // n.fireDate = NSDate(timeIntervalSinceNow: 5)
-                n.timeZone = NSTimeZone.defaultTimeZone()
                 n.applicationIconBadgeNumber = ++UIApplication.sharedApplication().applicationIconBadgeNumber
                 n.userInfo = [
                     "id": "onetimenotification"
@@ -124,7 +142,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 n.alertTitle = "One time notification title"
                 n.alertBody = "One time notification body"
 
-                // n.repeatInterval = NSCalendarUnit.init(rawValue: 0)
                 UIApplication.sharedApplication().scheduleLocalNotification(n)
             }
         }
