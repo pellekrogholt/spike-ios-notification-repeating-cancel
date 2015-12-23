@@ -29,3 +29,7 @@ notification is re-triggered when firing
 
 - (stackoverflow post)[http://stackoverflow.com/questions/34186247/why-does-canceling-of-a-local-notification-triggers-a-repeating-local-notificati]
 - (Apple dev forum post)[https://forums.developer.apple.com/message/94169]
+
+## Tryout
+
+Use iOS 8 alert controller approach instead of JCNotificationBannerPresenter. Problem was reproduced.
