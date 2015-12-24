@@ -29,3 +29,8 @@ notification is re-triggered when firing
 
 - (stackoverflow post)[http://stackoverflow.com/questions/34186247/why-does-canceling-of-a-local-notification-triggers-a-repeating-local-notificati]
 - (Apple dev forum post)[https://forums.developer.apple.com/message/94169]
+
+## Temporary solution
+
+Cancel and reschedule the repeating notification before creating and scheduling the
+onetime notification.

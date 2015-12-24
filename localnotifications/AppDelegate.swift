@@ -25,8 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.listNotifications()
 
         let n = UILocalNotification()
-        n.fireDate = NSDate(timeIntervalSinceNow: 15)
-        n.soundName = UILocalNotificationDefaultSoundName
+        n.fireDate = NSDate(timeIntervalSinceNow: 10)
         n.timeZone = NSTimeZone.defaultTimeZone()
         n.applicationIconBadgeNumber = 0
         n.userInfo = ["id": "dailyreminder"]
@@ -82,7 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // 1. Go to somewhere in the app
                         // 2. Cancel the notification from the `notifications view`
                         UIApplication.sharedApplication().cancelLocalNotification(notification)
-                        // `cancel` results in an additional call up of the "dailyreminder" ~ why?
                     })
             case UIApplicationState.Inactive:
                 NSLog(String(format: "%@ > UIApplicationState.Inactive", id))
@@ -94,16 +92,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+
         if let userInfo = notification.userInfo,
+           let fireDate = notification.fireDate,
            let id = userInfo["id"] as? String
            where id == "dailyreminder" {
-            NSLog("Repeating daily reminder was called ~ lets fire a noti to show the user")
+            NSLog("Repeating daily reminder was called ~ lets fire a noti to show the user //////////////")
 
             // Some condition checks that need to be true before firing the local notification
             if true {
+
+                NSLog(fireDate.description)
+
+                // 1. Cancel repeating notification
+
+                UIApplication.sharedApplication().cancelLocalNotification(notification)
+
+                // 2. create new repeating + add one day
+
+                let ng = UILocalNotification()
+                ng.fireDate = fireDate.dateByAddingTimeInterval(60*60*24)
+                ng.timeZone = NSTimeZone.defaultTimeZone()
+                ng.userInfo = ["id": "dailyreminder"]
+                ng.repeatInterval = NSCalendarUnit.Day
+
+                // 3. schedule repeating
+
+                UIApplication.sharedApplication().scheduleLocalNotification(ng)
+
+                NSLog("New noti was scheduled")
+                NSLog(ng.description)
+
+                // Finally create and schedule the onetime notification
                 let n = UILocalNotification()
-                n.fireDate = nil
-                n.timeZone = NSTimeZone.defaultTimeZone()
                 n.applicationIconBadgeNumber = ++UIApplication.sharedApplication().applicationIconBadgeNumber
                 n.userInfo = [
                     "id": "onetimenotification"
@@ -118,16 +139,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func listNotifications() {
-        if let notifications = UIApplication.sharedApplication().scheduledLocalNotifications {
+        if let notifications = UIApplication.sharedApplication().scheduledLocalNotifications
+           where notifications.count > 0 {
             NSLog("Notifications found:::::::::::::::::::::::::::::::::::::::::::::")
             for n in notifications {
-                if let id = n.userInfo?["id"] as? String {
+                if let fireDate = n.fireDate,
+                   let id = n.userInfo?["id"] as? String {
                     NSLog(id)
+                    NSLog(fireDate.description)
                 }
                 else {
                     NSLog("noti has no id")
                 }
             }
+
             NSLog("////////////////////////////////////////////////////////////////")
         }
         else {
@@ -135,6 +160,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
-
 
 }
